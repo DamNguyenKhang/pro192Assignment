@@ -31,8 +31,8 @@ public class Customer {
         setDobByString(dob);
         setPhone(phone);
         setMail(mail);
-        this.id = cccd;
-        this.numberAccount = STK;
+        setCccd(cccd);
+        setNumberAccount(numberAccount);
         setSoduTaiKhoanStr(soDuTaiKhoan);
         this.transactions = new ArrayList<>();
     }
@@ -76,6 +76,32 @@ public class Customer {
         return phone != null && phone.matches(regex);
     }
 
+    public boolean isValidCccd(String cccd) {
+        String regex = "^\\d{12}$";
+        return cccd != null && cccd.matches(regex);
+    }
+
+    public void setCccd(String cccd) {
+        if (isValidCccd(cccd)) {
+            this.id = cccd;
+        } else {
+            throw new IllegalArgumentException("CCCD must be a 12-digit number");
+        }
+    }
+
+    public boolean isValidNumberAccount(String numberAccount) {
+        String regex = "^SE\\d{5}$";
+        return numberAccount != null && numberAccount.matches(regex);
+    }
+
+    public void setNumberAccount(String numberAccount) {
+        if (isValidNumberAccount(numberAccount)) {
+            this.numberAccount = numberAccount;
+        } else {
+            throw new IllegalArgumentException("Number Account must follow format SE00000");
+        }
+    }
+
     public void setPassword(String password) throws IllegalArgumentException{
         if (isValidPassword(password)) {
 //            this.password = hashPassword(password);
@@ -107,10 +133,6 @@ public class Customer {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
-    }
-
-    public void setCccd(String cccd) {
-        this.id = cccd;
     }
 
     public void setSTK(String STK) {
